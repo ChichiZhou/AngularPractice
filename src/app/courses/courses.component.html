@@ -1,0 +1,56 @@
+<h1>{{ title }}</h1>
+<!-- property binding -->
+<img [src]="imageURL" />
+<!-- attribute -->
+<br />
+<table>
+  <tr>
+    <td [colSpan]="colSpan">No attribute bounding</td>
+    <td [attr.colspan]="colSpan">attribute bounding</td>
+  </tr>
+</table>
+<!-- Use bootstrap -->
+<!-- btn 的话，没有按键框 -->
+<br />
+<button class="btn">This is created by using Bootstrap (no btn-primary)</button>
+<!-- btn-primary 的话，有按键框 -->
+<br />
+<button class="btn btn-primary">
+  This is created by using Bootstrap (no btn-primary)
+</button>
+<!-- class binding -->
+<!-- 有 active 的话，则会变成深色，如果没有 active，则在点击之后会变成深色 -->
+<br />
+<button class="btn btn-primary" [class.active]="isActive">
+  Test class binding
+</button>
+<!-- style binding -->
+<br />
+<button class="btn btn-primary" [style.backgroundColor]="'green'">
+  Test style binding
+</button>
+<!-- event binding -->
+<!-- dom event 在这里链接中： https://www.w3schools.com/jsref/dom_obj_event.asp -->
+<br />
+<button
+  class="btn btn-primary"
+  [style.backgroundColor]="'red'"
+  (click)="clickButton()"
+>
+  Test event binding
+</button>
+<!-- template variables -->
+<!-- 这里的 #email 就是 template variable，其作用是指代这个 input element -->
+<br />
+<input type="text" #email (keyup.enter)="onKeyUp(email)" />
+<!-- Two way binding -->
+<!-- 这里使用 ngModel 来进行双向绑定，这里绑定的是一个 field -->
+<br />
+<input
+  type="text"
+  [(ngModel)]="twoWayBinding"
+  (keyup.enter)="onTwoWayBinding()"
+/>
+
+<br />
+<span>{{ text | summary }}</span>
