@@ -1,0 +1,90 @@
+<!-- 对于 form 元素，Angular 默认执行一个 ngForm -->
+<!-- ngForm 会给出一个 ngSubmit 用来提交这个 form -->
+<!-- 这里的 template varible 是对所有的 form-control 的一个总结 -->
+<form #f="ngForm" (ngSubmit)="submit(f)">
+  <!-- 这里的 form-group 和 form-control 都是 bootstrap 中的，目的是让 form 更好看 -->
+  <div ngModelGroup="contact" #contact="ngModelGroup">
+    <div class="form-group">
+      <label for="firstName">
+        First Name
+      </label>
+      <!-- ngModel 的作用是添加一个 validation -->
+      <!-- ngModel 使得 Angular 创建了一个 formcontrol object，然后把这个formcontrol object 和该 Inputfield 结合 -->
+      <input
+        required
+        ngModel
+        name="firstName"
+        id="firstName"
+        type="text"
+        class="form-control"
+        #firstName="ngModel"
+        (change)="log(firstName)"
+        minlength="3"
+        maxlength="10"
+        pattern="banana"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="firstName.touched && !firstName.valid"
+        [style.border]="'2px solid red'"
+      >
+        <div *ngIf="firstName.errors.required">First name required</div>
+        <div *ngIf="firstName.errors.minlength">Frist name minlength</div>
+        <div *ngIf="firstName.errors.maxlength">Frist name maxlength</div>
+        <div *ngIf="firstName.errors.pattern">Frist name pattern</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="comment">Comment</label>
+    <textarea
+      ngModel
+      name="comment"
+      #comment="ngModel"
+      id="comment"
+      class="form-control"
+      cols="30"
+      rows="10"
+    ></textarea>
+  </div>
+  <div class="checkbox">
+    <label for="">
+      <input type="checkbox" ngModel name="isSubscribed" /> Subscribe to mailing
+      list
+    </label>
+  </div>
+  <!-- Drop down -->
+  <div class="form-group">
+    <label for="contactMethod">Contact Method</label>
+    <!-- 如果是多选，则在 select 中添加 multiple -->
+    <select
+      ngModel
+      name="contactMethod"
+      id="contactMethod"
+      class="form-control"
+    >
+      <option value=""></option>
+      <!-- 这里也可以使用 [value]="method.id" 但是需要注意的是，value 只能绑定一个 string，不能绑定 object。如果想绑定 object，则使用 ngValue -->
+      <option *ngFor="let method of contactMethods" [ngValue]="method">{{
+        method.name
+      }}</option>
+    </select>
+  </div>
+  <!-- 使用 radio button -->
+  <div *ngFor="let method of contactMethods" class="radio">
+    <label for="">
+      <input
+        ngModel
+        type="radio"
+        name="contactMethodRadio"
+        [value]="method.id"
+      />
+      {{ method.name }}
+    </label>
+  </div>
+  <p>
+    {{ f.value | json }}
+  </p>
+  <button class="btn btn-primary" [disabled]="!f.valid">Submit</button>
+</form>
