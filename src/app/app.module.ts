@@ -7,9 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses/courses.component';
 import { InputFormatDirective } from './input-format.directive';
+import { ZippyComponent } from './zippy/zippy.component';
 
 @NgModule({
-  declarations: [AppComponent, CoursesComponent, SummaryPipe, InputFormatDirective],
+  declarations: [AppComponent, CoursesComponent, SummaryPipe, InputFormatDirective, ZippyComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
