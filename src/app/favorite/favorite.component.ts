@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-favorite',
@@ -6,11 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./favorite.component.css'],
 })
 export class FavoriteComponent implements OnInit {
-  isFavorite = true;
+  @Input('is-favorite') isFavorite = true; // input property
+  @Output('changeIcon') changeIcon = new EventEmitter(); // output property
   onClick() {
     this.isFavorite = !this.isFavorite;
+    this.changeIcon.emit({ newValue: this.isFavorite }); // 这里需要 emit，否则不会触发 changeIcon 这个event
   }
   constructor() {}
 
   ngOnInit(): void {}
+}
+
+export interface FavoriteChangedEventArgs {
+  newValue: boolean;
 }

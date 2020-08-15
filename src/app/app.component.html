@@ -1,3 +1,16 @@
 <app-courses></app-courses>
 <br />
-<app-favorite></app-favorite>
+<!-- output properites 的作用是 bind a method in the host component -->
+<app-favorite
+  [is-favorite]="post.isFavorite"
+  (changeIcon)="onFavoriteChanged($event)"
+></app-favorite>
+
+<br />
+<!-- 使用 ngContainer -->
+<app-panel>
+  <!-- 使用 select -->
+  <div class="heading">HEADING</div>
+  <!-- 使用 ng-container -->
+  <ng-container class="body">BODY</ng-container>
+</app-panel>
