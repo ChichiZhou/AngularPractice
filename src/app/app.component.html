@@ -1,1 +1,92 @@
-<app-courses></app-courses>
+<!-- 使用 ngIf，如果 ngIf 的值是 false，则这个 div 不会出现 -->
+<div *ngIf="courses.length > 0">
+  List of Courses
+</div>
+<div *ngIf="courses.length == 0">
+  No courses yet
+</div>
+<!-- 使用 ng-templage，需要用 template variable -->
+<div *ngIf="courses.length > 0; then listCourses; else noCourses"></div>
+<ng-template #listCourses>
+  List of Courses
+</ng-template>
+<ng-template #noCourses>
+  No courses yet
+</ng-template>
+<!-- 使用 hidden attribute，将 hidden 当做 property binding-->
+<div [hidden]="courses.length == 0">
+  List of Courses
+</div>
+<div [hidden]="courses.length > 0">
+  No courses yet
+</div>
+<!-- ngSwitch -->
+<ul class="nav nav-pills">
+  <li [class.active]="viewMode == 'map'">
+    <a (click)="viewMode = 'map'">Map View</a>
+  </li>
+  <li [class.active]="viewMode == 'list'">
+    <a (click)="viewMode = 'list'">List View</a>
+  </li>
+</ul>
+
+<div [ngSwitch]="viewMode">
+  <div *ngSwitchCase="'map'">Map View Content</div>
+  <div *ngSwitchCase="'list'">List View Content</div>
+  <div *ngSwitchDefault>Otherwise</div>
+</div>
+<!-- ngFor -->
+<!-- 这里使用了 ngFor 的 export value -->
+<!-- https://angular.io/api/common/NgForOf -->
+<ul>
+  <li *ngFor="let course of newCourses; index as i; even as isEven">
+    {{ i }} - {{ course.name }} <span *ngIf="isEven"> (EVEN) </span>
+  </li>
+</ul>
+<!-- Add button -->
+<button class="btn btn-primary" (click)="addCourse()">Add course</button>
+<ul>
+  <li *ngFor="let course of newCourses">
+    {{ i }} - {{ course.name }}
+    <button class="btn btn-success" (click)="removeCourse(course)">
+      Remove Course
+    </button>
+  </li>
+</ul>
+<!-- Use TrackBy -->
+<button class="btn btn-primary" (click)="loadCourses()">Load Course</button>
+<ul>
+  <li *ngFor="let course of newCourses; trackBy: trackCourse">
+    {{ i }} - {{ course.name }}
+  </li>
+</ul>
+<!-- 这里在 directives 中使用 * ，如果有 *，那么 Angular 将会自动将其改写成 ng-template 的格式 -->
+
+<!-- ngClass -->
+<button [class.btn]="'true'" [class.btn-primary]="'true'">
+  HELLO WORLD Angular
+</button>
+<!-- 使用 ngClass 则可写成 -->
+<button
+  [ngClass]="{
+    btn: 'true',
+    'btn-primary': 'true'
+  }"
+>
+  HELLO WORLD Angular
+</button>
+<!-- ngStyle -->
+<button
+  [ngClass]="{
+    btn: 'true',
+    'btn-primary': 'true'
+  }"
+  [ngStyle]="{
+    backgroundColor: 'green'
+  }"
+>
+  HELLO WORLD Angular
+</button>
+<!-- Custom Directives -->
+<br />
+<input type="text" [appInputFormat]="'uppercase'" />
