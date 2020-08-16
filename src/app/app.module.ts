@@ -9,9 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses/courses.component';
 import { PostsComponent } from './posts/posts.component';
+import { GithubFollowersComponent } from './github-followers/github-followers.component';
 
 @NgModule({
-  declarations: [AppComponent, CoursesComponent, SummaryPipe, PostsComponent],
+  declarations: [AppComponent, CoursesComponent, SummaryPipe, PostsComponent, GithubFollowersComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [PostService],
   bootstrap: [AppComponent],
