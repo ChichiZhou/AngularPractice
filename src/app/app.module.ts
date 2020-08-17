@@ -1,3 +1,4 @@
+import { GithubFollowersService } from './github-followers.service';
 import { AppErrorHandler } from './common/app-error-handlers';
 import { PostService } from './services/post.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,6 +24,7 @@ import { GithubFollowersComponent } from './github-followers/github-followers.co
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
     PostService,
+    GithubFollowersService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
   ],
   bootstrap: [AppComponent],
