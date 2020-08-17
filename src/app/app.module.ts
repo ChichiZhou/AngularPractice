@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SummaryPipe } from './courses/summary.pipe';
 import { HttpClientModule } from '@angular/common/http';
-
+import { OrderService } from './services/order.service';
+import { AuthService } from './services/auth.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses/courses.component';
