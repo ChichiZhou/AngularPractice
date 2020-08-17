@@ -5,8 +5,15 @@
     alt="Generic placeholder image"
   />
   <div class="media-body">
-    <h5 class="mt-0">Media heading</h5>
-    {{ follower.login }}
-    <a href="follower.avatar_url"> {{ follower.html_url }}</a>
+    <h5 class="mt-0">
+      <!-- 这里如果加上 'followers' 就会报错？？？？？？？？？-->
+      <a [routerLink]="[follower.id, follower.login]">
+        {{ follower.login }}
+      </a>
+    </h5>
+    <!-- 如果要用 route parameter，则这里用到 property binding，并且用到一个 array -->
+    <!-- follower.id, follower.login 是 github api 中定义的 -->
+
+    <a routerLink="follower.avatar_url"> {{ follower.html_url }}</a>
   </div>
 </div>

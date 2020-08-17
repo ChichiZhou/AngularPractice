@@ -1,3 +1,5 @@
+import { NotFoundError } from './common/not-found-error';
+import { RouterModule } from '@angular/router';
 import { GithubFollowersService } from './github-followers.service';
 import { AppErrorHandler } from './common/app-error-handlers';
 import { PostService } from './services/post.service';
@@ -12,6 +14,10 @@ import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses/courses.component';
 import { PostsComponent } from './posts/posts.component';
 import { GithubFollowersComponent } from './github-followers/github-followers.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { HomeComponent } from './home/home.component';
+import { GithubProfileComponent } from './github-profile/github-profile.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +26,24 @@ import { GithubFollowersComponent } from './github-followers/github-followers.co
     SummaryPipe,
     PostsComponent,
     GithubFollowersComponent,
+    NavbarComponent,
+    HomeComponent,
+    GithubProfileComponent,
+    NotFoundComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: '', component: HomeComponent },
+      { path: 'followers/:id/:username', component: GithubProfileComponent }, // 要把更精确（more specific）的放在前面
+      { path: 'followers', component: GithubFollowersComponent },
+      { path: 'posts', component: PostsComponent },
+      { path: '**', component: NotFoundError },
+    ]),
+  ],
   providers: [
     PostService,
     GithubFollowersService,

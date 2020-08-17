@@ -1,0 +1,36 @@
+<!-- 这里的 template 是从 bootstrap 中找出的 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <!-- 这里不用 href 这个attribute 因为 href 会刷新这个page上的所欲内容-->
+      <!-- 这里使用 RouterModule 中定义的 routerLink -->
+      <!-- active 是一个 bootstrap 中的class，其作用是用来 highlight 某些值 -->
+      <ul class="nav navbar-nav">
+        <!-- 使用 routerLinkActive 用来表示点击之后应该有的 class -->
+        <li routerLinkActive="active current">
+          <a
+            class="nav-item nav-link"
+            routerLink="/followers"
+            [queryParams]="{ page: 1, order: 'newest' }"
+            >Followers
+          </a>
+        </li>
+        <li routerLinkActive="active current">
+          <a class="nav-item nav-link" routerLink="/posts">Post</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
