@@ -1,3 +1,6 @@
+import { BadInput } from './../common/bad-input';
+import { NotFoundError } from './../common/not-found-error';
+import { AppError } from './../common/app-error';
 import { PostService } from './../services/post.service';
 import { HttpClient } from '@angular/common/http'; // 使用的时候，用 HttpClient
 import { Component, OnInit } from '@angular/core';
@@ -15,28 +18,31 @@ export class PostsComponent implements OnInit {
 
   createPost(input: HTMLInputElement) {
     let post = { title: input.value };
+    this.posts.splice(0, 0, post); // 乐观法，意思是先显示出来
+
     input.value = '';
-    this.service.createPost(post).subscribe(
-      (response) => {
-        post['id'] = response.id;
-        this.posts.splice(0, 0, post);
-        console.log(response);
+    this.service.create(post).subscribe(
+      (newPost) => {
+        post['id'] = newPost.id;
+        console.log(newPost);
       },
-      (error: Response) => {
-        if (error.status === 400) {
+      (error: AppError) => {
+        this.posts.splice(0, 1);
+
+        if (error instanceof BadInput) {
           // this.form.setErrors(error.json());
+          // this.form.setErrors(error.originalError);
         } else {
-          alert('An unexpected error occurred.');
-          console.log(error);
+          throw error; // 直接 throw 即可
         }
       }
     );
   }
 
   updatePost(post) {
-    this.service.updatePost(post).subscribe(
-      (response) => {
-        console.log(response);
+    this.service.update(post).subscribe(
+      (updatedPost) => {
+        console.log(updatedPost);
       },
       (error) => {
         alert('An unexpected error occurred.');
@@ -46,13 +52,13 @@ export class PostsComponent implements OnInit {
   }
 
   deletePost(post) {
-    this.service.deletePost(post).subscribe(
-      (response) => {
+    this.service.delete(post.id).subscribe(
+      () => {
         let index = this.posts.indexOf(post);
-        this.posts.splice(index, 1);
+        this.posts.splice(index, 1); // 悲观做法
       },
-      (error: Response) => {
-        if (error.status === 404) alert('This post already deleated');
+      (error: AppError) => {
+        if (error instanceof NotFoundError) alert('This post already deleated');
         else {
           alert('An unexpected error occurred.');
           console.log(error);
@@ -64,14 +70,12 @@ export class PostsComponent implements OnInit {
   // 如果有需要进行初始化的，可以放在 ngOnInit 中
   ngOnInit(): void {
     // get data from server
-    this.service.getPosts().subscribe(
-      (response) => {
-        this.posts = response as any; // 区别在这里，并不知道为什么？？？？
-      },
-      (error) => {
-        alert('An unexpected error occurred.');
-        console.log(error);
-      }
-    );
+    // this.service.getAll().subscribe((response) => {
+    //   this.posts = response as any; // 区别在这里，并不知道为什么？？？？
+    // });
+
+    this.service.getAll().subscribe((posts) => {
+      this.posts = posts as any; // 区别在这里，并不知道为什么？？？？
+    });
   }
 }

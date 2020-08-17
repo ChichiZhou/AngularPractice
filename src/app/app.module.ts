@@ -1,6 +1,7 @@
+import { AppErrorHandler } from './common/app-error-handlers';
 import { PostService } from './services/post.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SummaryPipe } from './courses/summary.pipe';
 import { HttpClientModule } from '@angular/common/http'; // 引入的时候，引入 HttpClientModule
@@ -12,9 +13,18 @@ import { PostsComponent } from './posts/posts.component';
 import { GithubFollowersComponent } from './github-followers/github-followers.component';
 
 @NgModule({
-  declarations: [AppComponent, CoursesComponent, SummaryPipe, PostsComponent, GithubFollowersComponent],
+  declarations: [
+    AppComponent,
+    CoursesComponent,
+    SummaryPipe,
+    PostsComponent,
+    GithubFollowersComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [PostService],
+  providers: [
+    PostService,
+    { provide: ErrorHandler, useClass: AppErrorHandler },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
