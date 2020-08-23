@@ -4,8 +4,9 @@ export class UsernameValidators {
   // 这个和 Validators.required 作用是一样的，都是用来检验输入的值
   // 这里注意，传入参数是 AbstractControl (也就是一个 formcontrol object)
   static cannotContainSpace(control: AbstractControl): ValidationErrors | null {
-    if ((control.value as string).indexOf(' ') >= 0)
+    if ((control.value as string).indexOf(' ') >= 0) {
       return { cannotContainSpace: true };
+    }
     return null;
   }
 

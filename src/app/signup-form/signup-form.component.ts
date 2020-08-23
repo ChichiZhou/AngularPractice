@@ -7,8 +7,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./signup-form.component.css'],
 })
 export class SignupFormComponent {
-  form = new FormGroup({
-    username: new FormControl(
+  // 所有的 validator 都在 ./username.validators.ts
+  formHezho = new FormGroup({
+    // 第一个参数是 formState，也就是 initial value of this form control object
+    // 第二个参数是 validator
+    usernameHezho: new FormControl(
       '',
       [
         Validators.required,
@@ -17,14 +20,18 @@ export class SignupFormComponent {
       ],
       UsernameValidators.shouldBeUnique
     ),
-    passowrd: new FormControl('', Validators.required),
+    passowrdHezho: new FormControl('', Validators.required),
   });
-  get username() {
-    return this.form.get('username');
+  get getUsernameHezho() {
+    return this.formHezho.get('usernameHezho');
+  }
+
+  get getPasswordHezho() {
+    return this.formHezho.get('passowrdHezho');
   }
 
   login() {
-    this.form.setErrors({
+    this.formHezho.setErrors({
       invalidLogin: true,
     });
   }
