@@ -30,13 +30,16 @@ export class DataService {
     return this.http
       .delete(this.url + '/' + id)
       .pipe(map((response) => response))
-      .pipe(catchError(this.handleError);
+      .pipe(catchError(this.handleError));
   }
 
   update(resource) {
     return this.http
       .put(this.url + '/' + resource.id, JSON.stringify(resource))
-      .pipe(map((response) => response), catchError(this.handleError));
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: Response) {
