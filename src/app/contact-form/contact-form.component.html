@@ -9,7 +9,12 @@
         First Name
       </label>
       <!-- ngModel 的作用是添加一个 validation -->
-      <!-- ngModel 使得 Angular 创建了一个 formcontrol object，然后把这个formcontrol object 和该 Inputfield 结合 -->
+      <!-- ngModel 使得 Angular 创建了一个 form-control object，然后把这个formcontrol object 和该 Inputfield 结合 -->
+      <!-- #firstName 是 template variable. -->
+      <!-- A template reference variable is often a reference to a DOM element within a template. It can also refer to a directive (which contains a component), an element, TemplateRef, or a web component. -->
+      <!-- id 是用来和 label 相对于 -->
+      <!-- name 是用来区别多个 ngModel 的。所以一定要有 name 否则会出现 error -->
+      <!-- If ngModel is used within a form tag, either the name attribute must be set or thr form control must be defined as 'standlone' in ngModelOptions -->
       <input
         required
         ngModel
@@ -72,6 +77,7 @@
     </select>
   </div>
   <!-- 使用 radio button -->
+  <!-- 在 div 中添加了 *ngFor -->
   <div *ngFor="let method of contactMethods" class="radio">
     <label for="">
       <input

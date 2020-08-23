@@ -11,7 +11,7 @@ export class NewCourseFormComponent {
     { id: 2, name: 'Art' },
     { id: 3, name: 'Movie' },
   ];
-  submit(f) {
+  submit(f): void {
     console.log(f.value);
   }
 }
