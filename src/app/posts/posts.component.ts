@@ -33,7 +33,8 @@ export class PostsComponent implements OnInit {
           // this.form.setErrors(error.json());
           // this.form.setErrors(error.originalError);
         } else {
-          throw error; // 直接 throw 即可
+          // 需要判断特殊情况，所以要用 else
+          throw error; // 直接 throw 即可调用 Errorhandler
         }
       }
     );
@@ -43,11 +44,12 @@ export class PostsComponent implements OnInit {
     this.service.update(post).subscribe(
       (updatedPost) => {
         console.log(updatedPost);
-      },
-      (error) => {
-        alert('An unexpected error occurred.');
-        console.log(error);
       }
+      // 可以直接去掉，因为不需要判断什么特殊情况
+      // ,(error) => {
+      //   alert('An unexpected error occurred.');
+      //   console.log(error);
+      // }
     );
   }
 
@@ -60,8 +62,9 @@ export class PostsComponent implements OnInit {
       (error: AppError) => {
         if (error instanceof NotFoundError) alert('This post already deleated');
         else {
-          alert('An unexpected error occurred.');
-          console.log(error);
+          throw error; // 直接 throw 出来
+          // alert('An unexpected error occurred.');
+          // console.log(error);
         }
       }
     ); // 这里需要 subscribe，因为需要更新 posts，用来显示所有的 item

@@ -16,15 +16,12 @@ export class DataService {
   create(resource) {
     return this.http
       .post<{ id: number }>(this.url, JSON.stringify(resource))
-      .pipe(map((response) => response))
       .pipe(
-        catchError((error: Response) => {
-          if (error.status === 400)
-            return Observable.throw(new BadInput(error.json()));
-          else return Observable.throw(new AppError(error.json()));
-        })
-      ); // 使用 <{ id: number }>
+        map((response) => response),
+        catchError(this.handleError)
+      ); // 使用 <{ id: number }>   能否将两个 pipe 合成一个
   }
+  // Return an array of objects
   getAll() {
     return this.http.get(this.url).pipe(map((response) => response));
   }
@@ -33,18 +30,22 @@ export class DataService {
     return this.http
       .delete(this.url + '/' + id)
       .pipe(map((response) => response))
-      .pipe(
-        catchError((error: Response) => {
-          if (error.status === 404)
-            return Observable.throw(new NotFoundError());
-          return Observable.throw(new AppError(error));
-        })
-      );
+      .pipe(catchError(this.handleError);
   }
 
   update(resource) {
     return this.http
       .put(this.url + '/' + resource.id, JSON.stringify(resource))
-      .pipe(map((response) => response));
+      .pipe(map((response) => response), catchError(this.handleError));
+  }
+
+  private handleError(error: Response) {
+    if (error.status === 400) {
+      return Observable.throw(new BadInput(error.json()));
+    }
+    if (error.status === 404) {
+      return Observable.throw(new NotFoundError());
+    }
+    return Observable.throw(new AppError(error));
   }
 }
