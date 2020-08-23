@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FavoriteComponent implements OnInit {
   isFavorite = true;
-  onClick() {
+  onClick(): void {
     this.isFavorite = !this.isFavorite;
   }
   constructor() {}
