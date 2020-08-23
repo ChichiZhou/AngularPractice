@@ -3,6 +3,6 @@
     {{ title }}
   </div>
   <div *ngIf="isExpanded" class="zippy-body">
-    <ng-content></ng-content>
+    <ng-content select=".body"></ng-content>
   </div>
 </div>
