@@ -12,12 +12,13 @@ export class AppComponent {
     title: 'Title',
     isFavorite: true,
   };
+  // 这个应该是从 service 中获得的
   tweet = {
     body: '...',
     likesCount: 10,
     isLiked: true,
   };
-  onFavoriteChanged(eventArgs: FavoriteChangedEventArgs) {
+  onFavoriteChanged(eventArgs: FavoriteChangedEventArgs): void {
     console.log('Favorite Changed: ', eventArgs.newValue);
   }
 }
